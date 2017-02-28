@@ -1,0 +1,25 @@
+{
+  "name": "randr",
+  "version": "1.0.0",
+  "description": "rants and raves",
+  "main": "index.js",
+  "scripts": {
+    "server": "http-server .",
+    "api": "nodemon server.js",
+    "watch": "watchify index.js -o dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.15.3",
+    "gmaps": "^0.4.24",
+    "http-server": "^0.9.0",
+    "lodash.throttle": "^4.1.1",
+    "neo4j": "^2.0.0-RC2",
+    "node-neo4j": "^2.0.3",
+    "ramda": "^0.23.0",
+    "request": "^2.79.0",
+    "restify": "^4.3.0"
+  }
+}
