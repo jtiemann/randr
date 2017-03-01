@@ -209,9 +209,13 @@ const theThen = prom => prom.then(resp => {
         })
     // render randr's
     if (data[1].r == "Rant") document.querySelector('#rants').innerHTML = document.querySelector('#rants').innerHTML 
-    	+ `<div data-iw="${i}" class="rant">${data[1].text} ${data[1].latlng} ${data[0].fname + " " + data[0].lname}</div>`
+    	+ `<div data-iw="${i}" class="rant">
+                <div class="rText">${data[1].text}</div> <div class="rName"> ${data[0].fname + " " + data[0].lname}</div> <div class="rDate">${(new Date(data[1].timedate)).toLocaleDateString() + " " + (new Date(data[1].timedate)).toLocaleTimeString()}</div>
+           </div>`
     else document.querySelector('#raves').innerHTML = document.querySelector('#raves').innerHTML 
-    	+ `<div data-iw="${i}" class="rave">${data[1].text} ${data[1].latlng} ${data[0].fname + " " + data[0].lname}</div>`
+    	+ `<div data-iw="${i}" class="rave">
+                <div class="rText">${data[1].text}</div> <div class="rName"> ${data[0].fname + " " + data[0].lname}</div> <div class="rDate">${(new Date(data[1].timedate)).toLocaleDateString() + " " + (new Date(data[1].timedate)).toLocaleTimeString()}</div>
+           </div>`
     });
     // add events on text randrs to open infoWindow
     [].slice.call(document.querySelectorAll('[data-iw]'))

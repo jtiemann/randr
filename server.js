@@ -42,10 +42,10 @@ var q = "match (m:Message)-[:IS_A]->(:Rave) where m.latlng[0]<"
 
 var qa = `match (p:Person)-[l:AUTHORED]->(m:Message)-[:IS_A]->(:Rave) where m.latlng[0]<${req.body.nelat} and m.latlng[0]>${req.body.swlat} 
               and  m.latlng[1]<${req.body.nelng} and m.latlng[1]>${req.body.swlng} 
-              return p, m {.text, r:'Rave', .latlng} UNION 
+              return p, m {.text, r:'Rave', .latlng, .timedate} UNION 
           match (p:Person)-[l:AUTHORED]->(m:Message)-[:IS_A]->(:Rant) where m.latlng[0]< ${req.body.nelat} and m.latlng[0]>${req.body.swlat} 
               and  m.latlng[1]<${req.body.nelng} and m.latlng[1]>${req.body.swlng}
-              return p, m {.text, r:'Rant', .latlng}  `
+              return p, m {.text, r:'Rant', .latlng, .timedate}  `
 
     db.cypherQuery(qa, 
         function(err, result){
