@@ -36,7 +36,7 @@ const theThen = prom => prom.then(resp => {
     });
     // add events on text randrs to open infoWindow
     [].slice.call(document.querySelectorAll('[data-iw]'))
-        .map(r=>r.addEventListener('mouseover', 
+        .map(r=>r.addEventListener('mouseenter', 
 		 	(e) => {
 		 		theMap.hideInfoWindows()
 		 		let jim = theMap.markers.filter(x=>x.id === parseInt(e.target.dataset.iw))[0]
