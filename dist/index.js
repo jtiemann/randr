@@ -186,17 +186,17 @@ const axios = require('axios');
 const R = require('ramda')
 const throttle = require('lodash.throttle');
 
-const apiCall = coords => {
+const apiCall = urlStr => dataObj => {
 	return axios({
 	  method: 'post',
-	  url: '/getDataByCoords',
-	  data: coords
-	});};
+	  url: urlStr,
+	  data: dataObj
+	});}
 
 const theThen = prom => prom.then(resp => {
   	document.querySelector('#raves').innerHTML=""
   	document.querySelector('#rants').innerHTML=""
-
+    theMap.removeMarkers()
     resp.data.map((data,i) => {
 	    theMap.addMarker({
 			  lat: data[1].latlng[0] + i*.0003,
@@ -241,7 +241,7 @@ const drawMap = (position) => {
 	el: '#map',
 	lat: position.coords.latitude,
 	lng: position.coords.longitude,
-	bounds_changed: throttle(R.compose(theThen, apiCall, getData), 1000)
+	bounds_changed: throttle(R.compose(theThen, apiCall('/getDataByCoords'), getData), 1000)
 	});}
 
 var x = document.getElementById("map");
