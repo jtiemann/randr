@@ -14,14 +14,19 @@
 #randr_wrapper {
 	margin: 5px;
 	display: flex;
+	overflow:auto;
+	width: 100%;
 } 
+#rants, #raves {
+    margin:15px;
+	width:50%;
+}
 .rant {
 	display:flex;
 	height:80px;
 	background-color: olive;
 	margin: 3px;
 	padding: 10px 15px;
-	width: 450px;
 	flex-direction: column;
 }
 .rave {
@@ -30,7 +35,6 @@
 	background-color: lightblue;
 	margin: 3px;
 	padding: 10px 15px;
-	width: 450px;
 	flex-direction: column;
 }
 .rText, .rName, .rDate {
