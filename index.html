@@ -1,12 +1,61 @@
 <html>
 <head>
-<script src="http://maps.google.com/maps/api/js"></script> 
+  <script src="http://maps.google.com/maps/api/js"></script> 
   <script src="/node_modules/gmaps/gmaps.js"></script> 
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </head>
   
 <body>
 <style> 
+/* Modal Header */
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+/* Modal Body */
+.modal-body {padding: 2px 16px;}
+
+/* Modal Footer */
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top: -300px; opacity: 0} 
+    to {top: 0; opacity: 1}
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
 #map {
  height:60%;
  width: 100%;
@@ -53,6 +102,7 @@
 </style>
  
 <div id="map"></div>
+<button id="addR" onclick="openAddRForm(this)">add Rant or Rave</button>
 <div id="randr_wrapper">
 
   <div id="rants">
@@ -62,7 +112,35 @@
   </div>
 
 </div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
 
+<!-- Modal content -->
+<div class="modal-content">
+  <div class="modal-header">
+    <span class="close">&times;</span>
+    <h2>Modal Header</h2>
+  </div>
+  <div class="modal-body">
+  	<form id='addRantOrRaveForm' >
+	  	<input id="userLatLng" hidden />
+	    <p>Some text in the Modal Body</p>
+	    <p>Some other text...</p>
+	    <input id="textR" type="text" required/>
+	      <input id="addRant" name="rantOrRave" type="radio" value="imARant" required/>
+	      <label for="addRant">Rant</label>
+	      <input id="addRave" name="rantOrRave" type="radio" value="imARave" required />
+	      <label for="addRave">Rave</label>
+	      <label for="rorRSignature">Signature</label> 
+	      <input id="rOrRSignature" type="text" required />
+	      <input type="submit" value="submit" />
+	 </form>
+
+  </div>
+  <div class="modal-footer">
+    <h3>Modal Footer</h3>
+  </div>
+</div>
 <script src='/dist/index.js'></script>
 </body>
 </html>
