@@ -6,20 +6,6 @@ require('./db_server.js')
 var server = restify.createServer();
 server.use(restify.bodyParser({ mapParams: false })); // mapped in req.body
 
-// server.get('/index.htmlp', function indexHTML(req, res, next) {
-//     fs.readFile(__dirname + '/index.html', function (err, data) {
-//         if (err) {
-//             next(err);
-//             return;
-//         }
-// console.log(data)
-//         res.setHeader('Content-Type', 'text/html');
-//         //res.writeHead(200);
-//         res.send(data);
-//         //next();
-//     });
-// });
-
 server.get(/\/?.*/, restify.serveStatic({
   directory: __dirname,
   default: '/index.html'
@@ -41,29 +27,19 @@ server.post('/postR', function create(req, res) {
     
 
     var query = req.body.type=='rant' ? qa : qb
-        console.log('--hiu'); // delivers an array of names of objects getting returned
 
     db.cypherQuery(query, 
         function(err, result){
             if(err) throw err;
-
             console.log(result.data); // delivers an array of query results
-            console.log('--hi'); // delivers an array of names of objects getting returned
             res.send(result.data)
     });     
 });
 
 server.post('/getDataByCoords', function create(req, res) {
     console.log('lo: ', req.body)
-var q = "match (m:Message)-[:IS_A]->(:Rave) where m.latlng[0]<" 
-        + req.body.nelat + " and m.latlng[0]>" + req.body.swlat 
-        + " and  m.latlng[1]<" + req.body.nelng + " and m.latlng[1]>" + req.body.swlng 
-        + " return m {.text, r:'Rave', .latlng} UNION match (m:Message)-[:IS_A]->(:Rant) where m.latlng[0]<" 
-        + req.body.nelat + " and m.latlng[0]>" + req.body.swlat 
-        + " and  m.latlng[1]<" + req.body.nelng + " and m.latlng[1]>" + req.body.swlng 
-        + " return m {.text, r:'Rant', .latlng}  "
 
-var qa = `match (p:Person)-[l:AUTHORED]->(m:Message)-[:IS_A]->(:Rave) where m.latlng[0]<${req.body.nelat} and m.latlng[0]>${req.body.swlat} 
+    var qa = `match (p:Person)-[l:AUTHORED]->(m:Message)-[:IS_A]->(:Rave) where m.latlng[0]<${req.body.nelat} and m.latlng[0]>${req.body.swlat} 
               and  m.latlng[1]<${req.body.nelng} and m.latlng[1]>${req.body.swlng} 
               return p, m {.text, r:'Rave', .latlng, .timedate} UNION 
           match (p:Person)-[l:AUTHORED]->(m:Message)-[:IS_A]->(:Rant) where m.latlng[0]< ${req.body.nelat} and m.latlng[0]>${req.body.swlat} 

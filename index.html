@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+ <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /> -->
+ <!-- <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script> -->
 </head>
   
 <body>
@@ -55,7 +56,7 @@
     from {top: -300px; opacity: 0}
     to {top: 0; opacity: 1}
 }
-
+#mapid { height: 180px; }
 #map {
  height:60%;
  width: 100%;
@@ -100,7 +101,7 @@
 	font-size: 10px;
 }
 </style>
- 
+ <!-- <div id="mapid"></div> -->
 <div id="map"></div>
 <button id="addR" onclick="openAddRForm(this)">add Rant or Rave</button>
 <div id="randr_wrapper">

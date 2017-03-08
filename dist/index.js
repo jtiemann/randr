@@ -185,7 +185,8 @@ require('gmaps')
 const axios = require('axios');
 const R = require('ramda')
 const throttle = require('lodash.throttle');
-var myLatLng=[0,0]
+var myLatLng=[0,0],  theMap, mymap // Globals!!
+
 
 const apiCall = urlStr => dataObj => {
 	return axios({
@@ -195,46 +196,30 @@ const apiCall = urlStr => dataObj => {
 	});}
 
 const theThen = prom => prom.then(resp => {
-  	document.querySelector('#raves').innerHTML=""
-  	document.querySelector('#rants').innerHTML=""
-    theMap.removeMarkers()
+    doClearMap()
     doRenderMarkers(resp)
     doRenderRantsAndRaves(resp)
     doAddeventListeners()
   	console.log(resp)
   })
 
-const getData = map => {
-	return {
-	    nelat: map.getBounds().getNorthEast().lat(),
-	  	nelng: map.getBounds().getNorthEast().lng(),
-	  	swlat: map.getBounds().getSouthWest().lat(),
-	  	swlng: map.getBounds().getSouthWest().lng()
-		}}
-
-const drawMap = position => {
-    myLatLng = [position.coords.latitude, position.coords.longitude]
-	theMap = new GMaps({
-	el: '#map',
-	lat: position.coords.latitude,
-	lng: position.coords.longitude,
-	bounds_changed: throttle(R.compose(theThen, apiCall('/getDataByCoords'), getData), 1000)
-	});}
-
-var x = document.getElementById("map");
-const getLocation = () => {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(R.compose(drawMap));
-    } 
-    else x.innerHTML = "Geolocation is not supported by this browser."}
-
+const doClearMap = function(){
+	document.querySelector('#raves').innerHTML=""
+  	document.querySelector('#rants').innerHTML=""
+    theMap.removeMarkers()
+}
 const doRenderMarkers = function(idata, single=false){
+
 	if (single == true) {
 		 var h = new Array()
 		 var t =  h.slice.call(document.querySelectorAll('[data-iw]')).map(r=>parseInt(r.dataset.iw))
          var idx = Math.max(...t) + 1
 	}
 	    idata.data.map((data,i) => {
+/*	    	//Leaflet-MapBox Map, display only, no events yet.
+            L.marker([single ? userLatLng.value.split(",")[0] : data[1].latlng[0], single ? userLatLng.value.split(",")[1] : data[1].latlng[1]  ]).addTo(mymap).bindPopup(single ? textR.value :  data[1].text)
+*/
+            //gmap Map
 		    theMap.addMarker({
 				  lat: single ? userLatLng.value.split(",")[0] : data[1].latlng[0] + i*.0003,
 				  lng: single ? userLatLng.value.split(",")[1] : data[1].latlng[1] + i*.0003,
@@ -287,6 +272,40 @@ const doAddeventListeners = function(idata){
         return idata
 }
 
+const getData = map => {
+	return {
+	    nelat: map.getBounds().getNorthEast().lat(),
+	  	nelng: map.getBounds().getNorthEast().lng(),
+	  	swlat: map.getBounds().getSouthWest().lat(),
+	  	swlng: map.getBounds().getSouthWest().lng()
+		}}
+
+const drawMap = position => {
+    myLatLng = [position.coords.latitude, position.coords.longitude]
+/*     //Leaflet-MapBox Map
+    mymap = L.map('mapid').setView(myLatLng, 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianRpZW1hbm4iLCJhIjoiY2owMGRxNjByMDIxejMzbXlzeDFxNnBkdyJ9.h6F_Md4FOBrOB7yRE_KoLA', {
+	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	    maxZoom: 18,
+	    id: 'your.mapbox.project.id',
+	    accessToken: 'pk.eyJ1IjoianRpZW1hbm4iLCJhIjoiY2owMGRxNjByMDIxejMzbXlzeDFxNnBkdyJ9.h6F_Md4FOBrOB7yRE_KoLA'
+    }).addTo(mymap);*/
+    //GMap map
+	theMap = new GMaps({
+	el: '#map',
+	lat: position.coords.latitude,
+	lng: position.coords.longitude,
+	bounds_changed: throttle(R.compose(theThen, apiCall('/getDataByCoords'), getData), 1000)
+	});}
+
+var x = document.getElementById("map");
+
+const getLocation = () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(R.compose(drawMap));
+    } 
+    else x.innerHTML = "Geolocation is not supported by this browser."}
+
 getLocation();
 
 var modal = document.getElementById('myModal');
@@ -321,6 +340,9 @@ document.getElementById('addRantOrRaveForm').addEventListener('submit',  evt => 
     
 	return false
 })
+
+
+
 },{"axios":3,"gmaps":28,"lodash.throttle":29,"ramda":30}],3:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":5}],4:[function(require,module,exports){
