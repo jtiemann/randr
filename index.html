@@ -61,6 +61,12 @@
  height:60%;
  width: 100%;
 }  
+#addR {
+   display:block;
+   width:100px;
+   margin:0 auto;
+
+}
 #randr_wrapper {
 	margin: 5px;
 	display: flex;
@@ -94,11 +100,14 @@
 	flex-grow:1;
 }
 .rName {
-	display:flex;
 	font-size: 10px;
 }
 .rDate {
 	font-size: 10px;
+}
+.where {
+  font-size: 13px;
+  font-weight: bold;
 }
 </style>
  <!-- <div id="mapid"></div> -->
@@ -127,6 +136,9 @@
 	  	<input id="userLatLng" hidden />
 	    <p>Some text in the Modal Body</p>
 	    <p>Some other text...</p>
+	    <label for="where">Where</label> 
+	    <input id="where" type="text" required />
+	    <label for="textR">What</label> 
 	    <input id="textR" type="text" required/>
 	      <input id="addRant" name="rantOrRave" type="radio" value="imARant" required/>
 	      <label for="addRant">Rant</label>
