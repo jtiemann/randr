@@ -3,7 +3,7 @@ const axios = require('axios');
 const R = require('ramda')
 const throttle = require('lodash.throttle');
 var myLatLng=[0,0],  theMap, mymap // Globals!!
-
+var Either = require('ramda-fantasy').Either;
 
 const apiCall = urlStr => dataObj => {
 	return axios({
@@ -28,7 +28,7 @@ const doClearMap = function(){
 const preprocessGroupedData = function(data) {
         if (data.length > 1) {
         	data = data.reduce((sum, unit)=>{
-                 sum.length == 0 ? sum = unit : sum[1].text = sum[1].text + "; " + unit[1].text
+                 sum.length == 0 ? sum = unit : sum[1].text = sum[1].text + ", " + unit[1].text
                  	//sum = R.assocPath([1,'text'], R.path([1,'text'], sum) + "; " + R.path([1,'text'], unit)) (sum)
                  return sum
             }, [])
@@ -60,7 +60,7 @@ const doRenderMarkers = function(idata, single=false){
 				  title: single ? textR.value :  data[1].text,
 				  mouseout: function(e) { theMap.hideInfoWindows() },
 				  mouseover: function(e){ this.infoWindow.open(this.map, this) },
-				  infoWindow: {content: `<p>${single ? textR.value :  data[1].text}</p>`},
+				  infoWindow: {content: `<p>${single ? textR.value :  '<div style="font-weight:bold;">' + data[2].where + '</div>' + data[1].text}</p>`},
 				  id: single ? idx : i
 	        })
      	})

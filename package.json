@@ -20,6 +20,7 @@
     "neo4j": "^2.0.0-RC2",
     "node-neo4j": "^2.0.3",
     "ramda": "^0.23.0",
+    "ramda-fantasy": "^0.7.0",
     "request": "^2.79.0",
     "restify": "^4.3.0"
   }
